@@ -1,8 +1,10 @@
+
 // Elements
 
 const LocationIDElement = document.getElementById('locationId');
 const startDateElement = document.getElementById('startDate');
 const endDateElement = document.getElementById('endDate');
+const BookingIDElement = document.getElementById('bookId');
 
 // Buttons
 const startButton = document.getElementById('startButton');
@@ -15,7 +17,8 @@ startButton.onclick = () => {
     const prefs = {
         locationId: LocationIDElement.value,
         startDate: startDateElement.value,
-        endDate: endDateElement.value
+        endDate: endDateElement.value,
+        tzData: LocationIDElement.options[LocationIDElement.selectedIndex].getAttribute('data-tz')
     }
     chrome.runtime.sendMessage({
         event: "onStart", prefs
@@ -29,12 +32,33 @@ stopButton.onclick = () =>{
     });
 }
 
-chrome.storage.local.get(['prefs'], (result) => {
-    const { prefs } = result;
+chrome.storage.local.get(['locationId','startDate', 'endDate','locations', 'isRunning'], (result) => {
+    const { locationId, startDate, endDate , locations, isRunning} = result;
+    setLocations(locations)
 
-    if (prefs) {
-        LocationIDElement.value = prefs.locationId;
-        startDateElement.value = prefs.startDate;
-        endDateElement.value = prefs.endDate;
+    if(locationId) {
+        LocationIDElement.value = locationId;
     }
-})
+
+    if(startDate) {
+        startDateElement.value = startDate;
+    }
+
+    if(endDate) {
+        endDateElement.value = endDate;
+    }
+
+    console.log("Running status: ", isRunning);
+});
+
+
+
+const setLocations = (locations) => {
+    locations.forEach(location => {
+        let optionElement = document.createElement('option');
+        optionElement.value = location.id;
+        optionElement.innerHTML = location.name;
+        optionElement.setAttribute('data-tz', location.tzData);
+        LocationIDElement.appendChild(optionElement);
+    })
+}
