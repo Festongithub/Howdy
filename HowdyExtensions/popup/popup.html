@@ -4,13 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Howdy Extension</title>
-    <link rel="stylesheet" href="bulma/css/bulma.min.css">
+    <link rel="stylesheet" href="bulma.min.css">
 </head>
 <body>
     
-    <div class="container">
+    
+<div class="container m-3">
         <h1 class="title"> Howdy User Extension </h1>
     </div>
+
+    <div class="field">
+        <label class="label">Status</label>
+       <span class="tag is-success">Running</span>
+       <span class="tag is-danger">Stopped</span>
+
+    </div>
     
+    <div class="field">
+        <label class="label">Location ID</label>
+        <div class="select">
+            <select id="locationId">
+                <option value="New York">New York</option>
+                <option value="Nairobi">Nairobi</option>
+                <option value="London">London</option>
+                <option value="Paris">Paris</option>
+            </select>
+    </div>
+    </div>
+    
+<div class="field">
+        <label class="label">Start Date</label>
+        <div class="control">
+                <input type="date" class="input" id="startDate">
+            </div>
+</div>
+
+<div class="field">
+        <label class="label">End Date</label>
+        <div class="control">
+                <input type="date" class="input" id="endDate">
+    </div>
+</div>
+
+</div>
+
+<div class="container m-3">
+    <button class="button is-success is-fullwidth" id="startButton">
+        Save & Start
+    </button>
+</div>
+
+<div class="container m-3">
+ <button class="button is-danger is-fullwidth" id="stopButton">
+    Stop
+</button> 
+</div>
+
+<div class="container m-3">
+    <button class="button is-info is-fullwidth" id="refreshButton">Refresh</button>
 </body>
+
+</body>
+<script src="popup.js"></script>
+
 </html>
