@@ -1,16 +1,19 @@
 {
     "name": "Howdy Extension",
-    "manifest_version" : 3,
+    "manifest_version": 3,
     "version": "1.0",
-    "description": " intercepts and replaces ad elements on web pages with customizable, positive content widgets",
-    
-    "background" : {
-        "service_worker" : "background.js"
+    "description": "intercepts and replaces ad elements on web pages with customizable, positive content widgets",
+
+    "action": {
+        "default_popup": "popup/popup.html"
     },
-    "content-scripts": {
-        "matches" : ["https://*/*"],
-        "js" : ["asstets/contentScript.js"]
-    }
 
+    "background": {
+        "service_worker": "service_worker.js",
+        "type": "module"
+    },
 
+    "permissions": [
+        "storage"
+    ]
 }
