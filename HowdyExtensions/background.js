@@ -1,8 +1,13 @@
-import fetchLocations from "./API_Calls/fetchlocations.js";
+import {fetchLocations} from "./API_Calls/fetchlocations";
+import { fetchOpenSlots } from "./API_Calls/fetchOpenSlots";
+const  ALARM_NAME = "HOWDY_ALARM";
+
+let cachedPrefs = {};
 
 
 chrome.runtime.onInstalled.addListener(details => {
     fetchLocations();
+    fetchQuotes();
 })
 
 chrome.runtime.onMessage.addListener( data => {
@@ -38,20 +43,22 @@ const handleOnstop = () => {
     console.log("onStop");
     setRunningStatus(false);
     stopAlarm();
+    cachedPrefs = {};
 }
 
 const handleOnStart = (prefs) => {
-    console.log("onStart");
     console.log("prefs recieved: ", prefs);
+    cachedPrefs = prefs;
+    chrome.storage.local.set(prefs);
     setRunningStatus(true);
-    chrome.storage.local.set(prefs)
+    createAlarm();
+
 }
 
 const  setRunningStatus = (isRunning) => {
     chrome.storage.local.set({isRunning})
 }
 
-const  ALARM_NAME = "HOWDY_ALARM";
 
 
 const createAlarm = () => {
@@ -66,12 +73,14 @@ const createAlarm = () => {
     chrome.alarms.create(ALARM_NAME, {periodInMinutes: 1});
 }
 
-chrome.alarms.onAlarm.addListener( alarm => {
-    console.log("Alarm Fired...");
-    fetchLocations();
-})
 
 // stop the alarm when the extension is installed
 const stopAlarm = () => {
     chrome.alarms.clear(ALARM_NAME);
 }
+
+chrome.alarms.onAlarm.addListener( alarm => {
+    console.log("Alarm Fired...");
+    fetchLocations();
+    fetchOpenSlots(cachedPrefs);
+})

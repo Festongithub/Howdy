@@ -15,18 +15,25 @@
 
     <div class="field">
         <label class="label">Status</label>
-       <span class="tag is-success">Running</span>
-       <span class="tag is-danger">Stopped</span>
+       <span id="runningSpan" class="tag is-success">Running</span>
+       <span id="stoppingSpan"class="tag is-danger">Stopped</span>
 
     </div>
     
     <div class="field">
         <label class="label">Location ID</label>
         <div class="select">
-            <select id="locationId">
-                
-            </select>
+            <select id="locationId"> </select>
     </div>
+    <p id="locationError" class="help is-danger" style="display: none;">Please select a valid location amigo! </p>
+    </div>
+
+    <div class="field">
+        <label class="label">Quotes</label>
+        <div class="select">
+            <select id="quotesId"> </select>
+    </div>
+    <p id="quoteError" class="help is-danger" style="display: none;">Please select Your favorite quote! </p>
     </div>
 
 
@@ -47,6 +54,7 @@
         <div class="control">
                 <input type="date" class="input" id="startDate">
             </div>
+            <p id="startDateError" class="help is-danger" style="display: none;"> Please select a valid start date</p>
 </div>
 
 <div class="field">
@@ -54,6 +62,7 @@
         <div class="control">
                 <input type="date" class="input" id="endDate">
     </div>
+    <p id="endDateError" class="help is-danger" style="display: none;"> Please select a valid end date</p>
 </div>
 
 </div>
