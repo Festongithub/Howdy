@@ -70,7 +70,57 @@ const endDateErrorElement = document.getElementById('endDateError');
 const quoteErrorElement = document.getElementById('quoteError');
 
 
+const showDateError = (dateErrorElem,  errorMessage) => {
+    dateErrorElem.innerHTML = errorMessage;
+    showElement(dateElem);
+}
+const validateStartDates = (today, startDate) => {
+    const isAfterToday = startDate.isBefore(today, 'date');
+
+    if (startDateElement.value) {
+        showDateError(startDateErrorElement, "Please enter a valid start date");
+    } else if (isAfterToday) 
+    {
+        showDateError(startDateErrorElement, "Start date should be after today");
+    } else {
+        hideElement(startDateErrorElement);
+    }
+
+    return startDateErrorElement.value && isAfterToday;
+}
+
+const validateEndDates = (today, startDate, endDate) => {
+    const isAfterStartDate = endDate.isAfter(startDate, 'date');
+    const isAfterToday = endDate.isBefore(today, 'date');
+
+    if (endDateElement.value) {
+        showDateError(endDateErrorElement, "Please enter a valid end date");
+    } else if (isAfterToday) {
+        showDateError(endDateErrorElement, "End date should be after today");
+
+    }
+     else {
+        hideElement(endDateErrorElement);
+    }
+
+    return endDateErrorElement.value && isAfterStartDate && isAfterToday;
+}
+
+
+const validateDates = () => {
+    const today = spacetime.now.startOf('day');
+    const startDate = spacetime(startDateElement.value).startOf('day');
+    const endDate = spacetime(endDateElement.value).startOf('day');
+
+    const isStartDateValid = validateStartDates(today, startDate);
+
+    const isEndDateValid = validateEndDates(today, startDate, endDate);
+
+    return isStartDateValid && isEndDateValid;
+}
 const performOnstartValidation = () => {
+    const isDatesValid = validateDates();
+
     if (LocationIDElement.value) {
         showElement(LocationErrorElement);
     } else {
@@ -83,17 +133,12 @@ const performOnstartValidation = () => {
         hideElement(startDateErrorElement);
     }
 
-    if (endDateElement.value) {
-        showElement(endDateErrorElement);
-    }
 
     if (QuoteElement.value) {
         showElement(quoteErrorElement);
     }
 
-
-    return  LocationErrorElement.value && startDateErrorElement.value && endDateErrorElement.value && quoteErrorElement.value;
-
+    return LocationIDElement.value && isDatesValid;
 }
 // Event Listeners
 startButton.onclick = () => {
@@ -153,8 +198,6 @@ chrome.storage.local.get(['locationId','startDate', 'endDate','locations', 'isRu
 
 });
 
-
-
 const setLocations = (locations) => {
     locations.forEach(location => {
         let optionElement = document.createElement('option');
@@ -164,3 +207,5 @@ const setLocations = (locations) => {
         LocationIDElement.appendChild(optionElement);
     })
 }
+
+const today = spacetime.now();

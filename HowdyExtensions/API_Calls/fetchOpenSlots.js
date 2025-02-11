@@ -1,4 +1,4 @@
-import { handleNotifications } from "../users_lib/handleNotifications";
+import { handleNotifications } from "../users_lib/createNotifications";
 
 // Fetch the list of open interviews at a location in a given date period
 export const fetchOpenSlots = (result) => {

@@ -1,11 +1,15 @@
 import {fetchLocations} from "./API_Calls/fetchlocations";
 import { fetchOpenSlots } from "./API_Calls/fetchOpenSlots";
+import { createNotification } from "./users_lib/createNotifications";
+
 const  ALARM_NAME = "HOWDY_ALARM";
 
 let cachedPrefs = {};
 
+let firstAppointment = null;
 
 chrome.runtime.onInstalled.addListener(details => {
+    handleOnstop();
     fetchLocations();
     fetchQuotes();
 })
@@ -39,11 +43,24 @@ chrome.runtime.onMessage.addListener( data => {
 
 })
 
+chrome.notifications.onClicked.addListener(() => {
+    chrome.tabs.create({url: "https://ttp.cbp.dhs.gov/scheduler"});
+})
+
+chrome.alarms.onAlarm.addListener( alarm => {
+    console.log("Alarm Fired...");
+    fetchLocations()
+    openSlotsJobs()
+})
+
+
+
 const handleOnstop = () => {
     console.log("onStop");
     setRunningStatus(false);
     stopAlarm();
     cachedPrefs = {};
+    firstAppointment = null;
 }
 
 const handleOnStart = (prefs) => {
@@ -64,9 +81,8 @@ const  setRunningStatus = (isRunning) => {
 const createAlarm = () => {
     chrome.alarms.get(ALARM_NAME, existingAlarms => {
         if(existingAlarms) {
+
             chrome.alarms.create(ALARM_NAME, {periodInMinutes: 1});
-            console.log("Alarm already exists");
-            return;
         }
     })
 
@@ -79,8 +95,16 @@ const stopAlarm = () => {
     chrome.alarms.clear(ALARM_NAME);
 }
 
-chrome.alarms.onAlarm.addListener( alarm => {
-    console.log("Alarm Fired...");
-    fetchLocations();
-    fetchOpenSlots(cachedPrefs);
-})
+
+const openSlotsJobs = () => {
+    fetchOpenSlots(cachedPrefs)
+    .then(data => handle) 
+}
+
+const handleOpenSlots =(openSlots) => {
+    if(openSlots && openSlots.length > 0 && openSlots[0].timestamp !== firstAppointment) {
+        firstAppointment = openSlots[0].timestamp;
+        createNotification(openSlots[0]);
+    }
+
+}
