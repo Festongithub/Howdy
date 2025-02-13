@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Howdy</title>
+    <link rel="stylesheet" href="bulma.min.css"/>
+</head>
+<body>
+
+    <div class="container m-3">
+        <h1 class="title">Howdy Fitness Friend</h1>
+
+    <div class="field">
+        <label class="label">Status </label>
+        <span id="runningSpan"class="tag has-background-link">Running</span>
+        <span class="tag is-danger">Stopped</span>
+    </div>
+
+    <div class="conatiner m-3">
+        <div class="field"></div>
+        <label  class="label">Quotes ID</label>
+        <div class="select">
+            <select id="quotesId"></select>
+        </div>
+    </div>
+
+    <div class="conatiner m-3">
+        <div class="field"></div>
+        <label  class="label">Fitness ID</label>
+        <div class="select">
+            <select id="fitId">
+                <option value="Benchpress">Do Benchpress</option>
+                <option value="Squats">Do Sqauts</option>
+                <option value="Farmer's Walk">Do Farmer's Walk</option>
+                <option value="Football">Do Football</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="conatiner m-3">
+        <div class="field"></div>
+        <label  class="label">Books ID</label>
+        <div class="select">
+            <select id="booksId">
+                <option value="The Pragmatic Programmer">The Pragmatic Programmer</option>
+                <option value="Laws of Human Nature">Laws of Human Nature</option>
+                <option value="The Conference of The Birds">The Conference of The Birds</option>
+            </select>
+        </div>
+    </div>
+    <div class="conatiner m-3">
+        <div class="field"></div>
+        <label  class="label">Tech News ID</label>
+        <div class="select">
+            <select id="newsId">
+                <option value="New York Times">New York Times</option>
+                <option value="Bussiness Daily News">Bussiness Daily News</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label"> Start Date</label>
+        <div class="control">
+            <input type="date" class="input" id="startDate"/>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label"> End Date</label>
+        <div class="control">
+            <input type="date" class="input" id="endDate"/>
+        </div>
+    </div>
+    <div class="container m-3">
+        <button class="button is-fullwidth is-primary" id="startBtn">Start</button>
+    </div>
+
+    <div class="container m-3">
+        <button class="button is-fullwidth is-danger" id="stopBtn">Stop</button>
+    </div>
+</div>
+
+</body>
+<script src="popup.js"></script>
+</html>
