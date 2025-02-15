@@ -17,5 +17,5 @@ fetch(apiUrl, {
     console.log(JSON.stringify(data, null, 2));
 })
 .catch(error => {
-    console.error('Error:', error.message);
+    console.log('Error:', error.message);
 });

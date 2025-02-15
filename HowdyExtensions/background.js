@@ -23,14 +23,12 @@ chrome.runtime.onMessage.addListener((data) => {
 });
 
 const handleOnStop = () => {
-    console.log('onStop in the Background');
+  
     setRunningStatus(false);
     stopAlarm();
 }
 
 const handleOnStart = (prefs) => {
-    console.log('onStart in the Background');
-    console.log('prefs received: ',prefs);
     chrome.storage.local.set(prefs);
     setRunningStatus(true);
     createAlarm();
@@ -54,5 +52,4 @@ const stopAlarm = () => {
     chrome.alarms.clearAll()
 }
 chrome.alarms.onAlarm.addListener((alarm) => {
-    console.log('On Alarm schedule code running...')
 })

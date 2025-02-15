@@ -15,8 +15,7 @@ export default function fetchExchangeRates() {
             }
         });
         filteredRates.sort((a, b) => a.author.localeCompare(b.author));
-        chrome.storage.local.set({exchangeRates: filteredRates}); // Changed 'quote' to 'quotes' for clarity
-        console.log(filteredRates);
+        chrome.storage.local.set({exchangeRates: filteredRates});
     })
     .catch(error => {
         console.log('Error:', error); // Changed to console.error for error logs

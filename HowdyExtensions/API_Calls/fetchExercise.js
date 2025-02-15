@@ -19,9 +19,8 @@ export default function fetchExercise() {
         }})
         filteredReps.sort((a, b) => a.name.localeCompare(b.name));
         chrome.storage.local.set({exercise: filteredReps});
-        console.log(filteredReps);
     })
     .catch(error => {
-        console.log('Error:', error);
+        console.error('Error:', error);
     });
 }

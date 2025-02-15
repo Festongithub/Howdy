@@ -167,7 +167,7 @@ chrome.storage.local.get(['quotes', 'fit', 'books', 'news', 'startDate', 'endDat
     } else {
         handleOnStopState();
     }
-    console.log(exercise);
+
 })
 
 const setQuotes = (quote) =>  {

@@ -18,7 +18,7 @@ export default function fetchQuotes() {
         });
         filteredQuotes.sort((a, b) => a.author.localeCompare(b.author));
         chrome.storage.local.set({quote: filteredQuotes}); // Changed 'quote' to 'quotes' for clarity
-        console.log(filteredQuotes);
+    
     })
     .catch(error => {
         console.log('Error:', error); // Changed to console.error for error logs
